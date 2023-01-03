@@ -21,8 +21,8 @@ class Solution {
           else
             arr[it]=H[i];
         }
-        return n-arr.size(); //
-        
+        return n-arr.size(); //Calculate maximum no of students who stay in assembly
+
     }
 };
 
