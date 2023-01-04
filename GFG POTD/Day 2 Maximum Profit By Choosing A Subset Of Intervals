@@ -1,0 +1,67 @@
+//{ Driver Code Starts
+// Initial Template for C++
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+// User function Template for C++
+class Solution {
+  public:
+   static bool comp(vector<int>v1,vector<int>v2){
+       if(v1[0]<v2[0])return true;
+      if(v1[0]>v2[0])return false;
+           if(v1[1]<v2[1])return true;
+           return false;
+      
+  }
+    int maximum_profit(int n, vector<vector<int>> &intervals) {
+        // Write your code here.
+        sort(intervals.begin(),intervals.end(),comp);
+      
+        int dp[n]={0};
+        return rec(0,intervals,n,dp);
+    }
+    int rec(int index,vector<vector<int>> &arr,int n,int dp[]){
+        if(index>=n)
+        return 0;
+        if(dp[index]!=0)return dp[index];
+        int not_select=rec(index+1,arr,n,dp);
+        int nextindex=find(index+1,arr[index][1],arr,n);
+        int select=arr[index][2]+rec(nextindex,arr,n,dp);
+        return dp[index]=max(select,not_select);
+        
+        
+        
+    }
+    int find(int index,int prevend,vector<vector<int>> &arr,int n){
+        while(index<n){
+            if(arr[index][0]>=prevend)
+            break;
+            else
+            index++;
+        }
+        return index;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        vector<vector<int>> intervals(n, vector<int>(3));
+        for (int i = 0; i < n; i++) {
+            cin >> intervals[i][0] >> intervals[i][1] >> intervals[i][2];
+        }
+        Solution obj;
+        cout << obj.maximum_profit(n, intervals) << endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
