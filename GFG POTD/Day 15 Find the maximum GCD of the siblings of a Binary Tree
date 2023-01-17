@@ -1,0 +1,31 @@
+class Solution
+{     int ans=0;
+      int res;
+void solve(Node* root){
+    if(!root)return;
+    solve(root->left);
+    solve(root->right);
+    if(root->left && root->right){
+        
+        int x=__gcd(root->left->data , root->right->data);
+          if(ans<=x){
+            if(ans==x){
+                res=max(res,root->data);
+            }
+            else{
+                res=root->data;
+                ans=x;
+            }
+        }
+    }
+}
+public:
+    int maxGCD( Node* root)
+    {ans=1;
+    res=0;
+    if(!root)return 0;
+    
+    solve(root);
+    return res;
+    }
+};
