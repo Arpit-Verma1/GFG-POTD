@@ -1,0 +1,47 @@
+//{ Driver Code Starts
+// Initial template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function template for C++
+
+class Solution {
+  public:
+    int minOperation(string s) {
+        // code here
+        if(s.length()==1)
+        return 1;
+        string a="";
+        string k="";
+        int max1=0;
+        for(int i=0;i<s.length();i++){
+            k="";
+            a+=s[i];
+            k+=a+a;
+            size_t found =s.find(k);
+            if(found != string::npos){
+                int x=a.length();
+                 max1=max(max1,x);
+              
+            }
+        }
+        return s.length()-max1+1;
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string s;
+        cin >> s;
+        Solution ob;
+        cout << ob.minOperation(s) << "\n";
+    }
+    return 0;
+}
+
+// } Driver Code Ends
