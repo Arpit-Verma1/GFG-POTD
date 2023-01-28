@@ -1,0 +1,74 @@
+//{ Driver Code Starts
+//Initial Template for C++
+#include<bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function Template for C++
+
+//Back-end complete function Template for C++
+
+class Solution{
+    public:
+    map<string,pair<bool,int>>m;
+    bool isScramble(string s1, string s2){
+        //code here
+        return fun(s1,s2);
+    }    
+    bool fun(string s1,string s2){
+        int n=s1.length();
+        if(s1==s2){
+            m[s1+s2]={true,1};
+            return true;
+        }
+       
+       if(m[s1+s2].second==1||m[s1+s2].second==-1){
+           return m[s1+s2].first;
+       }
+        for(int i=1;i<n;i++){
+            string a=s1.substr(0,i);
+            string b=s2.substr(0,i);
+            string c=s1.substr(i,n);
+            string d=s2.substr(i,n);
+        
+        if(fun(a,b)&&fun(c,d)){
+            m[s1+s2]={true,1};
+        }
+        string e=s1.substr(0,i);
+            string f=s2.substr(n-i,i);
+            string g=s1.substr(i,n);
+            string h=s2.substr(i,n-i);
+          if(fun(e,f)&&fun(g,h)){
+            m[s1+s2]={true,1};
+        }
+        }
+        m[s1+s2]={false,-1};
+        return false;
+    }
+};
+
+
+
+//{ Driver Code Starts.
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--){
+        string S1, S2;
+        cin>>S1>>S2;
+        Solution ob;
+        
+        if (ob.isScramble(S1, S2)) {
+            cout << "Yes";
+        }
+        else {
+            cout << "No";
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
