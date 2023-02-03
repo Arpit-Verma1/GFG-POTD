@@ -1,0 +1,66 @@
+//{ Driver Code Starts
+//Initial Template for C++
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function Template for C++
+
+class Solution{
+    public:
+    pair<int,int> endPoints(vector<vector<int>> matrix, int R, int C){
+        //code here
+        ///up,down,left,right
+        int traverse[4][2]={{-1,0},{1,0},{0,-1},{0,1}};//define to traverse
+        int reversestep[4]={1,0,3,2};//define to reverse the last curr after out
+        int changedir[4]={3,2,0,1};//define to change dir if get 1;
+        int curr=3;
+        int i=0,j=0;
+        while(i!=R&&j!=C&&i!=-1&&j!=-1){
+            if(matrix[i][j]==0){
+               i+=traverse[curr][0];
+               j+=traverse[curr][1];
+            }
+            else{
+                matrix[i][j]=0;
+                i+=traverse[changedir[curr]][0];
+                j+=traverse[changedir[curr]][1];
+                curr=changedir[curr];
+            }
+        }
+       
+        pair<int,int>p;
+        p.first=i+traverse[reversestep[curr]][0];
+        p.second=j+traverse[reversestep[curr]][1];
+        return p;
+    }
+};
+
+//{ Driver Code Starts.
+
+
+int main()
+{
+    int tc;
+	scanf("%d", &tc);
+	while(tc--){
+		int row, col;
+		scanf("%d", &row);
+		scanf("%d", &col);
+		vector<vector<int>> matrix(row , vector<int> (col));
+	 
+		for(int i = 0; i < row; i++){
+			for(int j = 0; j < col; j++){
+			    cin>>matrix[i][j];
+			}
+		}
+		Solution obj;
+		pair<int,int> p = obj.endPoints(matrix, row, col);
+		
+		cout << "(" << p.first << ", " << p.second << ")" << endl;
+	}
+	return 0;
+}
+// } Driver Code Ends
