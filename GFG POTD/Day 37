@@ -1,0 +1,46 @@
+//{ Driver Code Starts
+//Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function Template for C++
+
+class Solution{
+public:
+    int maxInstance(string s){
+     map<char,int>m;
+     int n=s.length();
+     for(int i=0;i<n;i++){
+         
+         m[s[i]]++;
+     }
+    
+     int mini=INT_MAX;
+     for(auto it:m){
+         
+         if(it.first=='b'||it.first=='a'||it.first=='n')
+         mini=min(mini,it.second);
+         else if(it.first=='l'||it.first=='o')
+         mini=min(mini,(it.second/2));
+     }
+     return mini;
+    }
+};
+
+//{ Driver Code Starts.
+int main(){
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        string s;
+        cin>>s;
+        Solution ob;
+        cout<<ob.maxInstance(s)<<endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
