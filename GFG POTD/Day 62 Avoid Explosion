@@ -1,0 +1,107 @@
+//{ Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+// User function Template for C++
+class DisjointSet {
+    vector<int> rank, parent;
+public:
+    DisjointSet(int n) {
+        rank.resize(n + 1, 0);
+        parent.resize(n + 1);
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+        }
+    }
+public:
+    int findUPar(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findUPar(parent[node]);
+    }
+
+    void unionByRank(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) return;
+        if (rank[ulp_u] < rank[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+        }
+        else if (rank[ulp_v] < rank[ulp_u]) {
+            parent[ulp_v] = ulp_u;
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            rank[ulp_u]++;
+        }
+    }
+};
+class Solution {
+  public:
+    vector<string> avoidExplosion(vector<vector<int>> mix, int n,
+                                  vector<vector<int>> danger, int m) {
+                                      vector<string>ans;
+                                       DisjointSet ds(n);
+                                       for(auto i:mix){
+                                           int par1=ds.findUPar(i[0]);
+                                           int par2=ds.findUPar(i[1]);
+                                           bool mix=true;
+                                           if(par1!=par2){
+                                           for(int j=0;j<danger.size();j++){
+                                                int dpar1=ds.findUPar(danger[j][0]);
+                                           int dpar2=ds.findUPar(danger[j][1]);
+                                           if(min(par1,par2)==min(dpar1,dpar2)&&max(par1,par2)==max(dpar1,dpar2)){
+                                           mix=false;
+                                           break;}
+                                           }
+                                            if(mix){
+                                               
+                                               ds.unionByRank(par1,par2);
+                                               ans.push_back("Yes");
+                                           }else{
+                                               ans.push_back("No");
+                                           }
+                                           
+                                           }
+                                           else{
+                                               ans.push_back("Yes");
+                                               
+                                           }
+                                          
+                                       }
+                                 
+                                  return ans;}
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int tt;
+    cin >> tt;
+    Solution sol;
+    while (tt--) {
+        int n, m;
+        cin >> n >> m;
+        vector<vector<int>> mix(n, vector<int>(2));
+        vector<vector<int>> danger(m, vector<int>(2));
+        for (int i = 0; i < n; i++) {
+            cin >> mix[i][0] >> mix[i][1];
+        }
+
+        for (int i = 0; i < m; i++) {
+            cin >> danger[i][0] >> danger[i][1];
+        }
+
+        auto ans = sol.avoidExplosion(mix, n, danger, m);
+        for (auto &val : ans) cout << val << " ";
+        cout << "\n";
+    }
+
+    return 0;
+}
+
+// } Driver Code Ends
