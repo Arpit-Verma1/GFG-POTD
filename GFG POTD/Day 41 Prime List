@@ -1,0 +1,110 @@
+//{ Driver Code Starts
+//Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+    int val;
+    Node *next;
+    Node(int num){
+        val=num;
+        next=NULL;
+    }
+};
+
+
+// } Driver Code Ends
+//User function Template for C++
+
+/*
+
+class Node{
+public:
+    int val;
+    Node *next;
+    Node(int num){
+        val=num;
+        next=NULL;
+    }
+};
+
+*/
+
+class Solution{
+public:
+    Node *primeList(Node *head){
+        Node *head1=head;
+        while(head!=NULL){
+            bool prime=true;
+            int no=head->val;
+           
+            for(int i=2;i*i<=no;i++){
+                if(no%i==0){
+                    prime=false;
+                    break;
+                }
+            }
+            
+            if(!prime){
+                int dis=INT_MAX;
+                int ans=-1;
+                for(int i=no-sqrt(no);i<=no+sqrt(no);i++){
+                    prime=true;
+                    for(int j=2;j*j<=i;j++){
+                        if(i%j==0)
+                        {
+                            prime=false;
+                            break;
+                        }
+                    }
+                    if(prime){
+                        
+                        if(dis>abs(head->val-i)){
+                    dis=abs(head->val-i);
+                    ans=i;}
+                        
+                    }
+                }
+                head->val=ans;
+                
+            }
+            if(no==1){
+                head->val=2;
+            }
+               head=head->next; 
+            }
+            return head1;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        Node *head,*tail;
+        int num;
+        cin>>num;
+        head=tail=new Node(num);
+        for(int i=0;i<n-1;i++){
+            int num;
+            cin>>num;
+            tail->next=new Node(num);
+            tail=tail->next;
+        }
+        Solution ob;
+        Node *temp=ob.primeList(head);
+        while(temp!=NULL){
+            cout<<temp->val<<" ";
+            temp=temp->next;
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
